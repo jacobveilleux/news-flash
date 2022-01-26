@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 import { createClient, Provider as UrqlProvider } from 'urql';
-import { Stories } from './src/Strories';
+import { NavigationContainer } from '@react-navigation/native';
+import { RootNavigator } from './src/screens/Root.navigator';
 
 const client = createClient({
   url: 'http://localhost:3000/graphql',
@@ -10,7 +10,9 @@ const client = createClient({
 export default function App() {
   return (
     <UrqlProvider value={client}>
-      <Stories />
+      <NavigationContainer>
+        <RootNavigator />
+      </NavigationContainer>
     </UrqlProvider>
   );
 }

@@ -6,8 +6,12 @@ import {
   StyleSheet,
   Text,
   View,
+  Pressable,
 } from 'react-native';
 import { gql, useQuery } from 'urql';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types';
 
 const STORIES_QUERY = gql`
   query AllStories {
@@ -20,7 +24,9 @@ const STORIES_QUERY = gql`
   }
 `;
 
-export const Stories = () => {
+export const HomeScreen = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [{ data, error, fetching }] = useQuery({ query: STORIES_QUERY });
 
   if (fetching) {
@@ -47,10 +53,10 @@ export const Stories = () => {
       keyExtractor={item => item.id}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
       renderItem={({ item }) => (
-        <View>
+        <Pressable onPress={() => navigation.navigate('StoryDetailsModal')}>
           <Text style={styles.title}>{item.title}</Text>
           <Text style={styles.summary}>{item.summary}</Text>
-        </View>
+        </Pressable>
       )}
     />
   );
@@ -69,8 +75,7 @@ const styles = StyleSheet.create({
   },
 
   flatListContainer: {
-    paddingTop: 100,
-    paddingBottom: 20,
+    paddingVertical: 20,
   },
 
   title: {

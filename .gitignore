@@ -12,3 +12,7 @@ web-build/
 
 # macOS
 .DS_Store
+
+# Generated files
+src/graphql/__generated__/*
+!src/graphql/__generated__/.gitkeep
